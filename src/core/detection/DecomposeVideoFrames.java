@@ -20,7 +20,7 @@ public class DecomposeVideoFrames {
 
         BufferedImage bi=null;
         	      	
-        	Picture frame = FrameGrab.getNativeFrame(new File("C:/Users/Federico-PC/Desktop/videoprova.mp4"), i);
+        	Picture frame = FrameGrab.getNativeFrame(new File("resources/videoprova.mp4"), i);
         	
             Transform transform = ColorUtil.getTransform(frame.getColor(), ColorSpace.RGB);
             Picture rgb = Picture.create(frame.getWidth(), frame.getHeight(), ColorSpace.RGB);
