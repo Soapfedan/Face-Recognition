@@ -5,6 +5,8 @@ import java.awt.event.WindowEvent;
 import org.opencv.core.Core;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -49,6 +51,8 @@ public class FaceDetection extends Application
 			// init the controller
 			FaceDetectionController controller = loader.getController();
 			controller.init();
+			
+	
 		}
 		catch (Exception e)
 		{

@@ -1,29 +1,19 @@
 package core.detection;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.io.ByteArrayInputStream;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfByte;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 import org.opencv.objdetect.Objdetect;
-import org.opencv.videoio.VideoCapture;
-
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -45,10 +35,7 @@ public class FaceDetectionController
 	// checkboxes for enabling/disabling a classifier
 	// a timer for acquiring the video stream
 	private ScheduledExecutorService timer;
-	// the OpenCV object that performs the video capture
-	private VideoCapture capture;
-	// a flag to change the button behavior
-	private boolean cameraActive;
+
 	private int founded=0;
 	private int total=0;
 	
@@ -62,7 +49,7 @@ public class FaceDetectionController
 	 */
 	protected void init()
 	{
-		capture = new VideoCapture();
+
 		faceCascade = new CascadeClassifier();
 		absoluteFaceSize = 0;
 		loadFaceLibrary("resources/lbpcascades/lbpcascade_frontalface.xml");
@@ -80,18 +67,7 @@ public class FaceDetectionController
 		// preserve image ratio
 		originalFrame.setPreserveRatio(true);
 		
-		/*
-		if (!this.cameraActive)
-		{
-						
-			// start the video capture
-			this.capture.open(0);
-			
-			// is the video stream available?
-			if (this.capture.isOpened())
-			{
-				this.cameraActive = true;
-				*/
+	
 				// grab a frame every 33 ms (30 frames/sec)
 				Runnable frameGrabber = new Runnable() {
 					
@@ -107,35 +83,7 @@ public class FaceDetectionController
 				
 				timer = Executors.newSingleThreadScheduledExecutor();
 				timer.scheduleAtFixedRate(frameGrabber, 0, 33, TimeUnit.MILLISECONDS);
-/*
-			}
-			else
-			{
-				// log the error
-				System.err.println("Failed to open the camera connection...");
-			}
-		}
-		else
-		{
-			// the camera is not active at this point
-			cameraActive = false;
-			
-			// stop the timer
-			try
-			{
-				timer.shutdown();
-				timer.awaitTermination(33, TimeUnit.MILLISECONDS);
-			}
-			catch (InterruptedException e)
-			{
-				// log the exception
-				System.err.println("Exception in stopping the frame capture, trying to release the camera now... " + e);
-			}
-			
-			// release the camera
-			capture.release();
-			// clean the frame
-			originalFrame.setImage(null);*/
+
 		}
 	
 	
@@ -159,7 +107,7 @@ public class FaceDetectionController
 				// read the current frame
 				//this.capture.read(frame);
 				img = DecomposeVideoFrames.decomposeVideo(fr);
-				frame = bufferedImageToMat(img);
+				frame = ImageConverter.bufferedImageToMat(img);
 				// if the frame is not empty, process it
 				if (!frame.empty())
 				{
@@ -167,7 +115,7 @@ public class FaceDetectionController
 					this.detectAndDisplay(frame);
 					
 					// convert the Mat object (OpenCV) to Image (JavaFX)
-					imageToShow = mat2Image(frame);
+					imageToShow = ImageConverter.mat2Image(frame);
 				}
 				
 			}
@@ -223,10 +171,10 @@ public class FaceDetectionController
 				
 		// each rectangle in faces is a face: draw them!
 		Rect[] facesArray = faces.toArray();
-		if(facesArray.length!=0){
+		/*if(facesArray.length!=0){
 			founded++;
 		}
-		total++;
+		total++;*/
 		for (int i = 0; i < facesArray.length; i++)
 			Imgproc.rectangle(frame, facesArray[i].tl(), facesArray[i].br(), new Scalar(0, 255, 0), 3);
 			
@@ -246,28 +194,5 @@ public class FaceDetectionController
 		
 	}
 	
-	/**
-	 * Convert a Mat object (OpenCV) in the corresponding Image for JavaFX
-	 * 
-	 * @param frame
-	 *            the {@link Mat} representing the current frame
-	 * @return the {@link Image} to show
-	 */
-	private Image mat2Image(Mat frame)
-	{
-		// create a temporary buffer
-		MatOfByte buffer = new MatOfByte();
-		// encode the frame in the buffer, according to the PNG format
-		Imgcodecs.imencode(".png", frame, buffer);
-		// build and return an Image created from the image encoded in the
-		// buffer
-		return new Image(new ByteArrayInputStream(buffer.toArray()));
-	}
-	
-	public static Mat bufferedImageToMat(BufferedImage bi) {
-		  Mat mat = new Mat(bi.getHeight(), bi.getWidth(), CvType.CV_8UC3);
-		  byte[] data = ((DataBufferByte) bi.getRaster().getDataBuffer()).getData();
-		  mat.put(0, 0, data);
-		  return mat;
-		}
+
 }
