@@ -62,8 +62,10 @@ public class FaceDetection extends Application
 	
 	public static void main(String[] args)
 	{
+		System.load("C:/OpenCV/opencv/build/java/x64/opencv_java310.dll");
+		
 		// load the native OpenCV library
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		//System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
 		launch(args);
 	}
