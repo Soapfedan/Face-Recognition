@@ -26,6 +26,7 @@ import javafx.scene.image.ImageView;
  * 
  * 		
  */
+
 public class FaceDetectionController
 {
 	// FXML buttons
@@ -43,6 +44,7 @@ public class FaceDetectionController
 	private CascadeClassifier faceCascade;
 	private int absoluteFaceSize;
 	private int frames = 0;
+	
 	
 	/**
 	 * Init the controller, at start time
@@ -77,8 +79,14 @@ public class FaceDetectionController
 						Image imageToShow = grabFrame(frames);
 						frames+=30;
 						originalFrame.setImage(imageToShow);
-						//System.out.println("Trovate "+founded+" Totali "+total);
+						System.out.println("Trovate "+founded+" Totali "+total);
+						//interrupt();
 					}
+					
+//					public void interrupt() {
+//	                    Thread.currentThread().interrupt();
+//	                }
+					
 				};
 				
 				timer = Executors.newSingleThreadScheduledExecutor();
@@ -134,7 +142,10 @@ public class FaceDetectionController
 	 * 
 	 * @param frame
 	 *            it looks for faces in this frame
+	 * @return 
 	 */
+	
+	
 	private void detectAndDisplay(Mat frame)
 	{
 		MatOfRect faces = new MatOfRect();
