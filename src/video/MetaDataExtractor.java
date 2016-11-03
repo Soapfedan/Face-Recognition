@@ -36,6 +36,7 @@ public class MetaDataExtractor {
 	            duration_video = ff.getDuration().toSeconds();
 	            	//ferma tutto, non capisco perchè
 	            System.out.println("durata video: " + duration_video);
+	            
 	            interrupt();
 	    }
 	    
