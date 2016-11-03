@@ -1,4 +1,4 @@
-package core.detection;
+package utility;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;

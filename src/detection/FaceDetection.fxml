@@ -7,7 +7,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.CheckBox?>
 	
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="core.detection.FaceDetectionController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="detection.FaceDetectionController">
 	<top>
 	</top>
 	<center>

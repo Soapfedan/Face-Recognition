@@ -1,12 +1,6 @@
-package core.detection;
-
-import java.awt.event.WindowEvent;
-
-import org.opencv.core.Core;
+package detection;
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -48,6 +42,7 @@ public class FaceDetection extends Application
 			// show the GUI
 			primaryStage.show();
 			
+			
 			// init the controller
 			FaceDetectionController controller = loader.getController();
 			controller.init();
@@ -68,5 +63,12 @@ public class FaceDetection extends Application
 		//System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
 		launch(args);
+	}
+
+	@Override
+	public void stop() throws Exception {
+		// TODO Auto-generated method stub
+		super.stop();
+		System.exit(0);
 	}
 }
