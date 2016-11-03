@@ -1,4 +1,4 @@
-package core.detection;
+package detection;
 
 import java.awt.image.BufferedImage;
 import java.util.concurrent.Executors;
@@ -16,6 +16,9 @@ import org.opencv.objdetect.Objdetect;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import utility.ImageConverter;
+import video.DecomposeVideoFrames;
+import video.MetaDataExtractor;
 
 /**
  * The controller associated with the only view of our application. The
@@ -55,7 +58,9 @@ public class FaceDetectionController
 		faceCascade = new CascadeClassifier();
 		absoluteFaceSize = 0;
 		loadFaceLibrary("resources/lbpcascades/lbpcascade_frontalface.xml");
+		MetaDataExtractor.get_duration_video();
 		startAnalysis();
+		
 	}
 	
 	/**
@@ -79,7 +84,7 @@ public class FaceDetectionController
 						Image imageToShow = grabFrame(frames);
 						frames+=30;
 						originalFrame.setImage(imageToShow);
-						System.out.println("Trovate "+founded+" Totali "+total);
+						//System.out.println("Trovate "+founded+" Totali "+total);
 						//interrupt();
 					}
 					
