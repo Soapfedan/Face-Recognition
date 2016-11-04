@@ -26,15 +26,15 @@ public class FaceDetection extends Application
 	private static FXMLLoader pathLoader;
 	private static BorderPane applicationPane;
 	private static GridPane pathPane;
-	private Scene applicationScene;
+	private static Scene applicationScene;
 	private Scene pathScene;
-	private Stage stage;
+	private static Stage stage;
 	
 	@Override
 	public void start(Stage primaryStage)
 	{
-		stage = new Stage();
-		primaryStage = stage;
+		
+		stage=primaryStage;
 		try
 		{
 			// load the FXML resource for the Main application
@@ -91,9 +91,8 @@ public class FaceDetection extends Application
 		System.exit(0);
 	}
 	
-	public void initProcessing(){
-		
-		stae
+	public static void initProcessing(){
+
 		stage.setScene(applicationScene);
 		// init the controller
 		FaceDetectionController controller = applicationLoader.getController();
