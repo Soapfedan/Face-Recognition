@@ -16,9 +16,9 @@ import org.opencv.objdetect.Objdetect;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import metadata.MetaDataExtractor;
 import utility.ImageConverter;
 import video.DecomposeVideoFrames;
-import video.MetaDataExtractor;
 
 /**
  * The controller associated with the only view of our application. The
@@ -84,24 +84,24 @@ public class FaceDetectionController
 					@Override
 					public void run()
 					{
-						if(MetaDataExtractor.duration_video-deltasec>videosec){
+						//if(MetaDataExtractor.duration_video-deltasec>videosec){
 							Image imageToShow = grabFrame(frames);
 							frames+=30;
 							//videosec+=deltasec;
 							originalFrame.setImage(imageToShow);
 							//System.out.println("Trovate "+founded+" Totali "+total);
-							
+						/*	
 						}else {
-							interrupt();	
+							//interrupt();	
 						}
-						
+						*/
 					}
-					
+					/*
 					public void interrupt() {
 	                    Thread.currentThread().interrupt();
 	                    System.exit(0);
 	                }
-					
+					*/
 				};
 				Thread threadAnalysis = new Thread(frameGrabber);
 				threadAnalysis.start();
@@ -220,6 +220,10 @@ public class FaceDetectionController
 		// load the classifier(s)
 		faceCascade.load(classifierPath);
 		
+	}
+	
+	public void getPath(){
+		System.out.println("eccomi");
 	}
 	
 

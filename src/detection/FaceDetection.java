@@ -3,9 +3,10 @@ package detection;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import video.MetaDataExtractor;
+import metadata.MetaDataExtractor;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.fxml.FXMLLoader;
 
 /**
@@ -20,27 +21,39 @@ import javafx.fxml.FXMLLoader;
  */
 public class FaceDetection extends Application
 {
+	private FXMLLoader applicationLoader;
+	private FXMLLoader pathLoader;
+	private BorderPane applicationPane;
+	private GridPane pathPane;
+	private Scene applicationScene;
+	private Scene pathScene;
+	
 	@Override
 	public void start(Stage primaryStage)
 	{
 		try
 		{
-			// load the FXML resource
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("FaceDetection.fxml"));
-			BorderPane root = (BorderPane) loader.load();
-			//primaryStage.setOnCloseRequest(new WindowEvent(primaryStage, WindowEvent.WINDOW_CLOSED));
-           
-     
-			// set a whitesmoke background
-			root.setStyle("-fx-background-color: whitesmoke;");
-			// create and style a scene
-			Scene scene = new Scene(root, 800, 600);
+			// load the FXML resource for the Main application
 			
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			applicationLoader = new FXMLLoader(getClass().getResource("FaceDetection.fxml"));
+			applicationPane = (BorderPane) applicationLoader.load();
+			
+			// create and style a scene
+			applicationScene = new Scene(applicationPane, 800, 600);
+			
+			
+			// load the FXML resource for the path reader
+			pathLoader = new FXMLLoader(getClass().getResource("PathReader.fxml"));
+			pathPane = (GridPane) pathLoader.load();
+			
+			// create and style a scene
+			pathScene = new Scene(pathPane,800,600);
+
+			
 			// create the stage with the given title and the previously created
 			// scene
 			primaryStage.setTitle("Face Detection and Tracking");
-			primaryStage.setScene(scene);
+			primaryStage.setScene(pathScene);
 			// show the GUI
 			primaryStage.show();
 			
@@ -73,5 +86,9 @@ public class FaceDetection extends Application
 		// TODO Auto-generated method stub
 		super.stop();
 		System.exit(0);
+	}
+	
+	public static void initProcessing(){
+		
 	}
 }
