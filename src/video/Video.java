@@ -21,7 +21,7 @@ public class Video {
 	public Video(String percorso){
 		
 		path = percorso;
-		MetaDataExtractor.get_duration_video();
+		MetaDataExtractor.get_duration_video(path);
 	}
 	
 	public Video(int cod, double duration_video, String percorso) {
