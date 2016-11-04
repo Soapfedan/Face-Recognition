@@ -2,6 +2,8 @@ package video;
 
 import java.io.File;
 
+import metadata.MetaDataExtractor;
+
 public class Video {
 	private int id;
 	private double duration;
@@ -14,6 +16,12 @@ public class Video {
 		id = cod;
 		duration = duration_video;
 		visitated = false;
+	}
+	
+	public Video(String percorso){
+		
+		path = percorso;
+		MetaDataExtractor.get_duration_video();
 	}
 	
 	public Video(int cod, double duration_video, String percorso) {
@@ -36,6 +44,9 @@ public class Video {
 		return id;
 	}
 	
+	public void setDuration(double d){
+		duration=d;
+	}
 	
 }
 

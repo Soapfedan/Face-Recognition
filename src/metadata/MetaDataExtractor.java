@@ -57,5 +57,29 @@ public class MetaDataExtractor {
 	
 	}
 	
+	public static void get_duration_video(String path) {
+		
+		File file = new File(path);
+			//l'ho aggiunto qua come prova, andrebbe fatto un metodo proprio per questa funzione
+	    	//per poter prendere i metadati devo creare un oggetto di tipo Media
+	    	//e far partire il mediaPlayer (setOnReady)
+	    Media ff = new Media(file.toURI().toString());
+	    MediaPlayer mediaPlayer = new MediaPlayer(ff);
+	    
+	    	//se non lo fo partire non si può leggere la durata
+	    	//dentro run dovrebbe fare solamente una iterazione
+	   
+	    mediaPlayer.setOnReady(new Runnable() {
+	    		    	
+	        @Override
+	        public void run() {
+	        	duration_video = ff.getDuration().toSeconds();
+	            Directory.getVideos().get(path).setDuration(duration_video);
+	            System.out.println("video "+path+" durata "+duration_video);
+	        }  
+	    });
 	
+	
+	
+	}
 }

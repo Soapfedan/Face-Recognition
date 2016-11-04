@@ -6,22 +6,37 @@ import video.Video;
 
 public class Directory {
 	private String path;
-	private HashMap <String,Video> videos;
+	private static HashMap <String,Video> videos;
 	
-		//cerca i file video dentro la directory passata come parametro
+	//cerca i file video dentro la directory passata come parametro
 		//forse va messo void e non boolean
-	public static boolean isVideos(String s) {
+	public static boolean loadVideos(String s) {
+		//TODO dobbiamo fare un filtraggio della stringa 
 		
+		videos = new HashMap<String,Video>();
 		boolean b = false;
 			//dir rappresenta la cartella corrente
 		File dir = new File(s);
-			//creato un array di file contenuti nella cartella
+			//check if the number of files that are contain in the directory is not zero or if the path is equal the empty string
+		if(dir.listFiles().length==0 || s.equals("")){
+			return false;
+		}
+		//creato un array di file contenuti nella cartella
 		File files[]=dir.listFiles();	
 			//per ogni file viene effettuato il controllo sul formato
-		for( File f : files ){		
-			if (extensionControl(f)) {      
-				//codice per inserire file nella cartella
+		try {
+			for( File f : files ){		
+				if (extensionControl(f)) {      
+					//codice per inserire file nella cartella
+					videos.put(f.getPath(), new Video(f.getPath()));
+					System.out.println(f.getPath());
+				}
 			}
+			b=true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			b=false;
 		}
 		return b;
 	}
@@ -40,5 +55,9 @@ public class Directory {
 			}
 		}
 		return b;
+	}
+	
+	public static HashMap<String, Video> getVideos() {
+		return videos;
 	}
 }

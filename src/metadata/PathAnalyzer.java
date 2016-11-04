@@ -19,7 +19,7 @@ public class PathAnalyzer {
 		System.out.println("eccomi");
 		text = directoryPath.getText();
 		System.out.println(text);
-		FaceDetection.initProcessing();
-		boolean b = Directory.isVideos(text);
+		//FaceDetection.initProcessing();
+		boolean b = Directory.loadVideos(text);
 	}
 }
