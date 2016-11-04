@@ -1,4 +1,4 @@
-package video;
+package metadata;
 
 import java.io.File;
 
@@ -10,7 +10,7 @@ public class MetaDataExtractor {
 		//attributo che indica la durata del video, è statico in modo da richiamarlo ovunque,
 		//non ci saranno altri attributi con questo scopo
 	public static double duration_video = 0;
-		//imposta la durata del video
+	//imposta la durata del video
 	public static void set_duration(double d) {
 		duration_video = d;
 	}
@@ -28,24 +28,34 @@ public class MetaDataExtractor {
 	    
 	    	//se non lo fo partire non si può leggere la durata
 	    	//dentro run dovrebbe fare solamente una iterazione
-	    mediaPlayer.setOnReady(new Runnable() {
+	   
+	    	Runnable durationRun = 	new Runnable() {
 	    	Thread currentThread = Thread.currentThread();
 	    	
 	        @Override
 	        public void run() {
-	            duration_video = ff.getDuration().toSeconds();
+	        	duration_video = ff.getDuration().toSeconds();
 	            	//ferma tutto, non capisco perchè
-	            System.out.println("durata video: " + duration_video);
-	          //  
-	            interrupt();
+	            
+	            //interrupt();
 	    }
 	    
 	    public void interrupt() {
 	        currentThread.interrupt();
 	    }
 	    
-	});
-	            
+	};
+	 Thread threadMediaData = new Thread (durationRun);
+	 threadMediaData.start();
+	 try {
+		threadMediaData.join();
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	 mediaPlayer.setOnReady(durationRun);
 	
 	}
+	
+	
 }
