@@ -4,6 +4,7 @@ package detection;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import metadata.MetaDataExtractor;
+import metadata.PathAnalyzer;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -21,16 +22,19 @@ import javafx.fxml.FXMLLoader;
  */
 public class FaceDetection extends Application
 {
-	private FXMLLoader applicationLoader;
-	private FXMLLoader pathLoader;
-	private BorderPane applicationPane;
-	private GridPane pathPane;
+	private static FXMLLoader applicationLoader;
+	private static FXMLLoader pathLoader;
+	private static BorderPane applicationPane;
+	private static GridPane pathPane;
 	private Scene applicationScene;
 	private Scene pathScene;
+	private Stage stage;
 	
 	@Override
 	public void start(Stage primaryStage)
 	{
+		stage = new Stage();
+		primaryStage = stage;
 		try
 		{
 			// load the FXML resource for the Main application
@@ -59,9 +63,8 @@ public class FaceDetection extends Application
 			
 			MetaDataExtractor.get_duration_video();
 			
-			// init the controller
-			FaceDetectionController controller = loader.getController();
-			controller.init();
+			PathAnalyzer analyzer = new PathAnalyzer();
+			analyzer.init();
 			
 	
 		}
@@ -88,7 +91,12 @@ public class FaceDetection extends Application
 		System.exit(0);
 	}
 	
-	public static void initProcessing(){
+	public void initProcessing(){
 		
+		stae
+		stage.setScene(applicationScene);
+		// init the controller
+		FaceDetectionController controller = applicationLoader.getController();
+		controller.init();
 	}
 }

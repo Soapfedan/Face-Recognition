@@ -222,9 +222,7 @@ public class FaceDetectionController
 		
 	}
 	
-	public void getPath(){
-		System.out.println("eccomi");
-	}
+	
 	
 
 }
