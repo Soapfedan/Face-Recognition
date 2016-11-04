@@ -48,7 +48,7 @@ public class FaceDetectionController
 	private int absoluteFaceSize;
 	private int frames = 0;
 	private double videosec = 0;
-	private double deltasec = 1.5;
+	private double deltasec = 0.003;
 	// Simple lock object for wait() calls
 	
 	
@@ -85,8 +85,9 @@ public class FaceDetectionController
 					public void run()
 					{
 						if(MetaDataExtractor.duration_video-deltasec>videosec){
-							Image imageToShow = grabFrame(videosec);
-							videosec+=deltasec;
+							Image imageToShow = grabFrame(frames);
+							frames+=30;
+							//videosec+=deltasec;
 							originalFrame.setImage(imageToShow);
 							//System.out.println("Trovate "+founded+" Totali "+total);
 							
@@ -98,6 +99,7 @@ public class FaceDetectionController
 					
 					public void interrupt() {
 	                    Thread.currentThread().interrupt();
+	                    System.exit(0);
 	                }
 					
 				};
@@ -115,7 +117,7 @@ public class FaceDetectionController
 	 * 
 	 * @return the {@link Image} to show
 	 */
-	private Image grabFrame(double sec)
+	private Image grabFrame(int sec)
 	{
 		// init everything
 		Image imageToShow = null;
