@@ -21,6 +21,7 @@ public class Video {
 	public Video(String percorso){
 		
 		path = percorso;
+		//It calls the method that calculate the duration of the video that has this PATH
 		MetaDataExtractor.get_duration_video(path);
 	}
 	

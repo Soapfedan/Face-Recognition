@@ -73,7 +73,10 @@ public class MetaDataExtractor {
 	    		    	
 	        @Override
 	        public void run() {
+	        	//calculate the duration of the video and it has putted on the
+	        	//Pair that has as key path and as value Video(path) 
 	        	duration_video = ff.getDuration().toSeconds();
+	        	//get the element and set his duration
 	            Directory.getVideos().get(path).setDuration(duration_video);
 	            System.out.println("video "+path+" durata "+duration_video);
 	        }  
