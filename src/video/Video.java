@@ -1,11 +1,14 @@
 package video;
 
+import java.io.File;
+
 public class Video {
-	int id;
-	double duration;
-	String path;
+	private int id;
+	private double duration;
+	private String path;
+	private File file;
 		//flag per capire se i thread già ci abbiano lavorato
-	boolean visitated;
+	private boolean visitated;
 	
 	public Video(int cod, double duration_video) {
 		id = cod;
@@ -18,13 +21,18 @@ public class Video {
 		duration = duration_video;
 		visitated = false;
 		path = percorso;
+		file = new File (path);
 	}
 	
-	private double getDuration() {
+	public double getDuration() {
 		return duration;
 	}
 	
-	private int getId() {
+	public String getPath() {
+		return path;
+	}
+	
+	public int getId() {
 		return id;
 	}
 	
