@@ -47,6 +47,7 @@ public class FaceDetectionController
 	private CascadeClassifier faceCascade;
 	private int absoluteFaceSize;
 	private int frames = 0;
+	// Simple lock object for wait() calls
 	
 	
 	/**
@@ -58,11 +59,9 @@ public class FaceDetectionController
 		faceCascade = new CascadeClassifier();
 		absoluteFaceSize = 0;
 		loadFaceLibrary("resources/lbpcascades/lbpcascade_frontalface.xml");
-		MetaDataExtractor.get_duration_video();
 		startAnalysis();
 		
 	}
-	
 	/**
 	 * The action triggered by pushing the button on the GUI
 	 */
@@ -74,7 +73,9 @@ public class FaceDetectionController
 		// preserve image ratio
 		originalFrame.setPreserveRatio(true);
 		
-	
+		// Block thread for a second until a player event unlocks it
+			
+				
 				// grab a frame every 33 ms (30 frames/sec)
 				Runnable frameGrabber = new Runnable() {
 					
@@ -84,6 +85,7 @@ public class FaceDetectionController
 						Image imageToShow = grabFrame(frames);
 						frames+=30;
 						originalFrame.setImage(imageToShow);
+						System.out.println("d "+MetaDataExtractor.duration_video);
 						//System.out.println("Trovate "+founded+" Totali "+total);
 						//interrupt();
 					}
@@ -93,6 +95,8 @@ public class FaceDetectionController
 //	                }
 					
 				};
+				Thread threadAnalysis = new Thread(frameGrabber);
+				threadAnalysis.start();
 				
 				timer = Executors.newSingleThreadScheduledExecutor();
 				timer.scheduleAtFixedRate(frameGrabber, 0, 33, TimeUnit.MILLISECONDS);

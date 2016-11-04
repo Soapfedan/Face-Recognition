@@ -2,6 +2,7 @@ package detection;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import video.MetaDataExtractor;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
@@ -42,6 +43,7 @@ public class FaceDetection extends Application
 			// show the GUI
 			primaryStage.show();
 			
+			MetaDataExtractor.get_duration_video();
 			
 			// init the controller
 			FaceDetectionController controller = loader.getController();
