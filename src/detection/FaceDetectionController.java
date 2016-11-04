@@ -47,6 +47,8 @@ public class FaceDetectionController
 	private CascadeClassifier faceCascade;
 	private int absoluteFaceSize;
 	private int frames = 0;
+	private double videosec = 0;
+	private double deltasec = 1.5;
 	// Simple lock object for wait() calls
 	
 	
@@ -82,17 +84,21 @@ public class FaceDetectionController
 					@Override
 					public void run()
 					{
-						Image imageToShow = grabFrame(frames);
-						frames+=30;
-						originalFrame.setImage(imageToShow);
-						System.out.println("d "+MetaDataExtractor.duration_video);
-						//System.out.println("Trovate "+founded+" Totali "+total);
-						//interrupt();
+						if(MetaDataExtractor.duration_video-deltasec>videosec){
+							Image imageToShow = grabFrame(videosec);
+							videosec+=deltasec;
+							originalFrame.setImage(imageToShow);
+							//System.out.println("Trovate "+founded+" Totali "+total);
+							
+						}else {
+							interrupt();	
+						}
+						
 					}
 					
-//					public void interrupt() {
-//	                    Thread.currentThread().interrupt();
-//	                }
+					public void interrupt() {
+	                    Thread.currentThread().interrupt();
+	                }
 					
 				};
 				Thread threadAnalysis = new Thread(frameGrabber);
@@ -109,7 +115,7 @@ public class FaceDetectionController
 	 * 
 	 * @return the {@link Image} to show
 	 */
-	private Image grabFrame(int fr)
+	private Image grabFrame(double sec)
 	{
 		// init everything
 		Image imageToShow = null;
@@ -123,7 +129,7 @@ public class FaceDetectionController
 			{
 				// read the current frame
 				//this.capture.read(frame);
-				img = DecomposeVideoFrames.decomposeVideo(fr);
+				img = DecomposeVideoFrames.decomposeVideo(sec);
 				frame = ImageConverter.bufferedImageToMat(img);
 				// if the frame is not empty, process it
 				if (!frame.empty())

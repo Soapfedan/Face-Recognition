@@ -1,5 +1,6 @@
 package detection;
 
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import video.MetaDataExtractor;

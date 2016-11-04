@@ -14,7 +14,7 @@ import utility.ImageConverter;
 
 public class DecomposeVideoFrames {
 		
-    public static BufferedImage decomposeVideo(int i) throws IOException, JCodecException {
+    public static BufferedImage decomposeVideo(double i) throws IOException, JCodecException {
 
         BufferedImage bi=null;
         
