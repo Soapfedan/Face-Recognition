@@ -19,6 +19,6 @@
   </rowConstraints>
    <children>
       <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="105.0" text="Start Analysis" onAction="#getPath" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-      <TextField prefHeight="25.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField prefHeight="25.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="directoryPath"/>
    </children>
 </GridPane>

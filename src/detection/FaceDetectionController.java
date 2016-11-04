@@ -36,7 +36,7 @@ public class FaceDetectionController
 
 	@FXML
 	private ImageView originalFrame;
-	// checkboxes for enabling/disabling a classifier
+	
 	// a timer for acquiring the video stream
 	private ScheduledExecutorService timer;
 
