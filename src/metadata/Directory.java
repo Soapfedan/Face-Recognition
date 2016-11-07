@@ -1,6 +1,9 @@
 package metadata;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import video.Video;
 
@@ -26,10 +29,12 @@ public class Directory {
 			//per ogni file viene effettuato il controllo sul formato
 		try {
 			for( File f : files ){		
-				if (extensionControl(f)) {      
+				if (extensionControl(f)) {   
+					MetaDataExtractor.extract_metada(f);
 					//codice per inserire file nella cartella
-					videos.put(f.getPath(), new Video(f.getPath()));
-					System.out.println(f.getPath());
+					Video vid = new Video(f.getPath(),MetaDataExtractor.duration_video,MetaDataExtractor.fps_video);
+					videos.put(f.getPath(), vid);
+					vid.printData();;
 				}
 			}
 			b=true;
@@ -40,17 +45,27 @@ public class Directory {
 		}
 		return b;
 	}
-		//controlla se file sia avi oppure mp4
+		//controlla se file sia video (considerando solamente formati che terminano con avi o mp4)
 	private static boolean extensionControl(File f) {
 		boolean b = false;
+		String tipo = null;
 			//visto che viene effettuato un controllo sulla stringa (cercato il punto)
 			//può venir fuori il problema della sua presenza
 			//vengono analizzati solo i file nella cartella che non sono directory
 		if (!f.isDirectory()) {
 			String s = f.getAbsolutePath();
+			Path path;
+			
+			try {
+	             path = Paths.get(f.getAbsolutePath()); 
+	             tipo = Files.probeContentType(path);
+	             //System.out.println("tipo: " + tipo.substring(0,tipo.indexOf("/")));
+	             
+	          } catch (Exception x) {
+	          }
 				//vengono selezionati solo i caratteri a partire dall'ultimo punto (l'estensione del file)
-			String format = s.substring(s.lastIndexOf("."));
-			if(format.equals(".avi") || format.equals(".mp4") || format.equals(".MP4")) {
+			String format = tipo.substring(0,tipo.indexOf("/"));
+			if(format.equals("video")) {
 				b = true;
 			}
 		}

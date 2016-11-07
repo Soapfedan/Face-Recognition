@@ -61,7 +61,7 @@ public class FaceDetection extends Application
 			// show the GUI
 			primaryStage.show();
 			
-			MetaDataExtractor.get_duration_video();
+			//MetaDataExtractor.get_duration_video();
 			
 			PathAnalyzer analyzer = new PathAnalyzer();
 			analyzer.init();
