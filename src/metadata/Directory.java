@@ -64,10 +64,17 @@ public class Directory {
 	          } catch (Exception x) {
 	          }
 				//vengono selezionati solo i caratteri a partire dall'ultimo punto (l'estensione del file)
-			String format = tipo.substring(0,tipo.indexOf("/"));
-			if(format.equals("video")) {
-				b = true;
+			
+			try {
+				String format = tipo.substring(0,tipo.indexOf("/"));
+				if(format.equals("video")) {
+					b = true;
+				}
 			}
+			catch (Exception exc) {
+				System.out.println(exc);
+			}
+			
 		}
 		return b;
 	}
