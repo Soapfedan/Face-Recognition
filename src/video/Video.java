@@ -1,6 +1,9 @@
 package video;
 
 import java.io.File;
+import java.util.ArrayList;
+
+import org.opencv.core.MatOfRect;
 
 import metadata.MetaDataExtractor;
 
@@ -12,6 +15,7 @@ public class Video {
 		//flag per capire se i thread già ci abbiano lavorato
 	private boolean visitated;
 	private double framerate;
+	private ArrayList<MatOfRect> detectedFaces;
 	
 		//video si costruisce con questo
 	public Video(String percorso, double duration_video, double frame_rate) {
@@ -69,6 +73,13 @@ public class Video {
 	public void printData() {
 		System.out.println("path: " + path + " duration:" + duration + " framerate: " + framerate);
 	}
-	
+	/**
+	 * Add a face that has founded by the algorithm 
+	 * 
+	 * @param face
+	 */
+	public void addFace(MatOfRect face){
+		detectedFaces.add(face);
+	}
 }
 

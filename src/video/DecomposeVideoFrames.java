@@ -14,6 +14,14 @@ import utility.ImageConverter;
 
 public class DecomposeVideoFrames {
 		
+	/**
+	 * With this method we can decompose a video in a series of bufferedimages
+	 * 
+	 * @param i
+	 * @return
+	 * @throws IOException
+	 * @throws JCodecException
+	 */
     public static BufferedImage decomposeVideo(int i) throws IOException, JCodecException {
 
         BufferedImage bi=null;

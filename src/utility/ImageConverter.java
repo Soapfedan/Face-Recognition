@@ -17,6 +17,12 @@ import javafx.scene.image.Image;
 
 public class ImageConverter {
 	
+	/**
+	 * Convert a picture (jcodec) from a bufferedimage
+	 * 
+	 * @param src
+	 * @return
+	 */
 	public static BufferedImage toBufferedImage(Picture src) {
 	       BufferedImage dst = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
 	
@@ -24,7 +30,12 @@ public class ImageConverter {
 	
 	        return dst;
 	}
-	 
+	 /**
+	  * Convert a bufferd image to a picture
+	  * 
+	  * @param src
+	  * @param dst
+	  */
 	public static void toBufferedImage(Picture src, BufferedImage dst) {
 	        byte[] data = ((DataBufferByte) dst.getRaster().getDataBuffer()).getData();
 	        int[] srcData = src.getPlaneData(0);

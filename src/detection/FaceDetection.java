@@ -63,6 +63,7 @@ public class FaceDetection extends Application
 			
 			//MetaDataExtractor.get_duration_video();
 			
+			//Viene inizializzato il controller della scena che preleva il path
 			PathAnalyzer analyzer = new PathAnalyzer();
 			analyzer.init();
 			
@@ -76,6 +77,7 @@ public class FaceDetection extends Application
 	
 	public static void main(String[] args)
 	{
+		//load the library with the relative path
 		System.load("C:/OpenCV/opencv/build/java/x64/opencv_java310.dll");
 		
 		// load the native OpenCV library
@@ -92,7 +94,8 @@ public class FaceDetection extends Application
 	}
 	
 	public static void initProcessing(){
-
+		
+		//set the application scene after the path scene
 		stage.setScene(applicationScene);
 		// init the controller
 		FaceDetectionController controller = applicationLoader.getController();

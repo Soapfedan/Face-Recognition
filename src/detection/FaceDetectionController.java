@@ -57,9 +57,10 @@ public class FaceDetectionController
 	 */
 	protected void init()
 	{
-
+		//init the classifier
 		faceCascade = new CascadeClassifier();
 		absoluteFaceSize = 0;
+		//load the xml files that have used for the face recognition
 		loadFaceLibrary("resources/lbpcascades/lbpcascade_frontalface.xml");
 		startAnalysis();
 		
