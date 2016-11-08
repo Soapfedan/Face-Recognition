@@ -16,12 +16,14 @@ public class Video {
 	private boolean visitated;
 	private double framerate;
 	private ArrayList<MatOfRect> detectedFaces;
+	private int category;
 	
 		//video si costruisce con questo
 	public Video(String percorso, double duration_video, double frame_rate) {
 		path = percorso;
-		duration = duration_video;
+		duration = duration_video/1000;
 		framerate = frame_rate;
+		setCategory();
 		visitated = false;
 	}
 	
@@ -31,23 +33,6 @@ public class Video {
 		visitated = false;
 		//It calls the method that calculate the duration of the video that has this PATH
 		//MetaDataExtractor.get_duration_video(path);
-	}
-	
-	public Video(int cod, double duration_video, String percorso) {
-		id = cod;
-		duration = duration_video;
-		visitated = false;
-		path = percorso;
-		file = new File (path);
-	}
-	
-	public Video(int cod, double duration_video, String percorso, double frame_rate) {
-		id = cod;
-		duration = duration_video;
-		visitated = false;
-		path = percorso;
-		file = new File (path);
-		framerate = frame_rate;
 	}
 	
 	public double getDuration() {
@@ -80,6 +65,21 @@ public class Video {
 	 */
 	public void addFace(MatOfRect face){
 		detectedFaces.add(face);
+	}
+	
+	public void setCategory(){
+		double d=duration/60;
+		if(d<2){//da 0 a 1.59 minuti
+			category = 1;
+		}else if(d<15){//da 2 a 14.59 minuti
+					category = 2;
+			  }else if(d<60){//da 15 a 59.99 minuti
+				  		category = 3;
+			  		}else if(d<120){//da 60 a 119.99 minuti
+			  				category = 4;
+			  			  }else{//oltre le due ore
+			  				  	category = 5;
+			  			  }
 	}
 }
 
