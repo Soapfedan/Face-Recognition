@@ -30,6 +30,8 @@ public class FaceDetection extends Application
 	private Scene pathScene;
 	private static Stage stage;
 	
+	private final static String OPENCVPATH = "C:/OpenCV/opencv/build/java/x64/opencv_java310.dll";
+	
 	@Override
 	public void start(Stage primaryStage)
 	{
@@ -78,7 +80,7 @@ public class FaceDetection extends Application
 	public static void main(String[] args)
 	{
 		//load the library with the relative path
-		System.load("C:/OpenCV/opencv/build/java/x64/opencv_java310.dll");
+		System.load(OPENCVPATH);
 		
 		// load the native OpenCV library
 		//System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
