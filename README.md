@@ -1,4 +1,4 @@
-## Face Detection with OpenCV and JavaFx
+# Face Detection with OpenCV and JavaFx
 
 *Computer Vision course - [Politecnico di Torino](http://www.polito.it)*
 
