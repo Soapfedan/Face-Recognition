@@ -7,5 +7,7 @@
 	<classpathentry kind="lib" path="Libraries/jcodec-0.1.9.jar"/>
 	<classpathentry kind="lib" path="Libraries/jcodec-javase-0.1.9.jar"/>
 	<classpathentry kind="lib" path="Libraries/jave-1.0.2.jar"/>
+	<classpathentry kind="lib" path="Libraries/jfxrt.jar"/>
+	<classpathentry kind="lib" path="Libraries/opencv-320.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

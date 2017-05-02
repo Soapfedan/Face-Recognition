@@ -16,11 +16,10 @@ public class PathAnalyzer {
 		//System.out.println("utilita");
 	}
 	
+	// Metodo chiamato alla premuta de bottone, vedi PathReader.fxml
 	public void getPath(){
-		//System.out.println("eccomi");
 		text = directoryPath.getText();
 		System.out.println(text);
-		//FaceDetection.initProcessing();
 		boolean b = Directory.loadVideos(text);
 	}
 }
