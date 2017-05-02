@@ -1,107 +1,91 @@
 package detection;
 
-
-import javafx.application.Application;
-import javafx.stage.Stage;
-import metadata.MetaDataExtractor;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import metadata.PathAnalyzer;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.fxml.FXMLLoader;
 
-/**
- * The main class for a JavaFX application. It creates and handle the main
- * window with its resources (style, graphics, etc.).
- * 
- * This application handles a video stream and try to find any possible human
- * face in a frame. It can use the Haar or the LBP classifier.
- * 
- *
- * 
- */
-public class FaceDetection extends Application
-{
-	private static FXMLLoader applicationLoader;
-	private static FXMLLoader pathLoader;
-	private static BorderPane applicationPane;
-	private static GridPane pathPane;
-	private static Scene applicationScene;
-	private Scene pathScene;
-	private static Stage stage;
+public class FaceDetection{
 	
-	private final static String OPENCVPATH = "C:/Users/Utente1/git/Face-Recognition/Libraries/opencv_java320.dll";
-										   /*"C:/OpenCV/opencv/build/java/x64/opencv_java310.dll"*/
+	private static final String TITLE = "Face Detection and Tracking";
+	private static final String LABEL_TEXT = "Search path";
+	private static final String CBOX_TEXT = "Include subdirectories";
+	private static final String BTTN_TEXT = "Search";
 	
-	@Override
-	public void start(Stage primaryStage)
-	{
+	private static final int TEXTBOX_COLUMNS = 50;
+	private static final int TEXTAREA_ROWS = 30;
+	private static final int TEXTAREA_COLUMNS = 100;
+	private static final Font TEXTAREA_FONT = new Font("Consolas", Font.PLAIN, 12);
+	
+	private static JFrame frame;
+	private static JPanel panel, panel_one, panel_two, panel_container;
+	private static JLabel label;
+	private static JTextField textField;
+	private static JCheckBox checkBox;
+	private static JTextArea textArea;
+	private static JScrollPane scrollPane;
+	private static JButton button;
+	
+	private static PathAnalyzer analyzer;
+	
+	public static JTextArea getTextArea(){
+		return textArea;
+	}
+	
+	public static void main(String[] args){
+		initialize();
+	}
+	
+	private static void initialize(){
+		analyzer = new PathAnalyzer();
 		
-		stage=primaryStage;
-		try
-		{
-			// load the FXML resource for the Main application
-			
-			applicationLoader = new FXMLLoader(getClass().getResource("FaceDetection.fxml"));
-			applicationPane = (BorderPane) applicationLoader.load();
-			
-			// create and style a scene
-			applicationScene = new Scene(applicationPane, 800, 600);
-			
-			
-			// load the FXML resource for the path reader
-			pathLoader = new FXMLLoader(getClass().getResource("PathReader.fxml"));
-			pathPane = (GridPane) pathLoader.load();
-			
-			// create and style a scene
-			pathScene = new Scene(pathPane,800,600);
+		frame = new JFrame(TITLE);
+		frame.setResizable(false);
+		frame.setBounds(300, 100, 800, 600);
+		frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		panel = new JPanel();
+		panel_one = new JPanel();
+		panel_two = new JPanel();
+		panel_two.setLayout(new GridBagLayout());
+		panel_container = new JPanel();
+		panel_container.setLayout(new BoxLayout(panel_container, BoxLayout.PAGE_AXIS));
+		
+		label = new JLabel(LABEL_TEXT);
+		textField = new JTextField();
+		checkBox = new JCheckBox(CBOX_TEXT);
+		textArea = new JTextArea(TEXTAREA_ROWS, TEXTAREA_COLUMNS);
+		scrollPane = new JScrollPane(textArea);        
+		button = new JButton(BTTN_TEXT);
+		
+		textArea.setEditable(false);
+		textField.setColumns(TEXTBOX_COLUMNS);
+		textArea.setFont(TEXTAREA_FONT);
 
-			
-			// create the stage with the given title and the previously created
-			// scene
-			primaryStage.setTitle("Face Detection and Tracking");
-			primaryStage.setScene(pathScene);
-			// show the GUI
-			primaryStage.show();
-			
-			//MetaDataExtractor.get_duration_video();
-			
-			//Viene inizializzato il controller della scena che preleva il path
-			PathAnalyzer analyzer = new PathAnalyzer();
-			analyzer.init();
-			
-	
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	public static void main(String[] args)
-	{
-		//load the library with the relative path
-		System.load(OPENCVPATH);
+		button.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent mev){
+				analyzer.getPath(textField.getText());
+				if (checkBox.isSelected()){
+					// ricerca ricorsiva
+				}
+				textArea.setCaretPosition(textArea.getDocument().getLength());
+			}
+		});
 		
-		// load the native OpenCV library
-		//System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
-		// Chiama il metodo init() e poi start().
-		launch(args);
-	}
-
-	@Override
-	public void stop() throws Exception {
-		// TODO Auto-generated method stub
-		super.stop();
-		System.exit(0);
+		frame.getContentPane().add(panel_container);
+		panel_container.add(panel);
+		panel_container.add(panel_one);
+		frame.getContentPane().add(panel_two);
+		panel.add(label);
+		panel.add(textField);
+		panel_one.add(checkBox);
+		panel_one.add(button);
+		panel_two.add(scrollPane);
+	
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	public static void initProcessing(){
-		//set the application scene after the path scene
-		stage.setScene(applicationScene);
-		// init the controller
-		FaceDetectionController controller = applicationLoader.getController();
-		controller.init();
-	}
 }

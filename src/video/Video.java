@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.opencv.core.MatOfRect;
 
+import detection.FaceDetection;
 import metadata.MetaDataExtractor;
 
 public class Video {
@@ -56,7 +57,8 @@ public class Video {
 	}
 	
 	public void printData() {
-		System.out.println("path: " + path + " duration:" + duration + " framerate: " + framerate);
+		FaceDetection.getTextArea().append("file: " + path + '\n' + '\t' +
+										   "duration: " + duration + "s framerate: " + framerate + " fps" + '\n');
 	}
 	/**
 	 * Add a face that has founded by the algorithm 
