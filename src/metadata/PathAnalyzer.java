@@ -18,7 +18,7 @@ public class PathAnalyzer {
 		case 0:
 			print("Please, insert a path in the textbox." + '\n'); break;
 		case 2:
-			print("Inserted path is not to a directory." + '\n'); break;
+			print("Inserted path is not a directory." + '\n'); break;
 		case 3:
 			print("The selected directory does not contain files." + '\n'); break;
 		case 4:

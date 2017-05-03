@@ -13,8 +13,8 @@ public class Directory {
 	
 	/**
 	 * Search for videos in a given pathname, then print duration and framerate.
-	 * @param path: pathname where the method will look in.
-	 * @return: flag that indicates the state of the search:
+	 * @param path pathname where the method will look in.
+	 * @return flag that indicates the state of the search:
 	 * 			0: path was empty.
 	 * 			1: at least one video found.
 	 * 			2: path was not a directory.
