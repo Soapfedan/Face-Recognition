@@ -39,7 +39,7 @@ public class Directory {
 								i++;
 								MetaDataExtractor.extract_metada(f);
 								//codice per inserire file nella cartella
-								Video vid = new Video(f.getPath(), MetaDataExtractor.duration_video, MetaDataExtractor.fps_video);
+								Video vid = new Video(f.getAbsolutePath(), MetaDataExtractor.duration_video, MetaDataExtractor.fps_video);
 								videos.put(f.getPath(), vid);
 								vid.printData();
 							}
