@@ -1,14 +1,9 @@
 package metadata;
 
 import detection.FaceDetection;
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 
 public class PathAnalyzer {
-	
-	//the text extracted from the textfield and it contains the path of the selected directory
-	
+		
 	private String directoryPath;
 	
 	public void init(){
@@ -17,7 +12,23 @@ public class PathAnalyzer {
 	
 	public void getPath(String text){
 		directoryPath = text;
-		FaceDetection.getTextArea().append("PATH = " + directoryPath + '\n');
-		boolean b = Directory.loadVideos(directoryPath);
+		print('\n' + "PATH = " + directoryPath + '\n');
+		int state = Directory.loadVideos(directoryPath);
+		switch(state){
+		case 0:
+			print("Please, insert a path in the textbox." + '\n'); break;
+		case 2:
+			print("Inserted path is not to a directory." + '\n'); break;
+		case 3:
+			print("The selected directory does not contain files." + '\n'); break;
+		case 4:
+			print("An exception while trying to resolve a file extension was thrown." + '\n'); break;
+		case 5:
+			print("No video (.avi, .mp4) in such directory." + '\n'); break;
+		}		
+	}
+	
+	private void print(String str){
+		FaceDetection.getTextArea().append(str);
 	}
 }

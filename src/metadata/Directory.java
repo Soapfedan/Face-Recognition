@@ -11,40 +11,62 @@ public class Directory {
 	private String path;
 	private static HashMap <String,Video> videos;
 	
-	//cerca i file video dentro la directory passata come parametro
-		//forse va messo void e non boolean
-	public static boolean loadVideos(String s) {
-		//TODO dobbiamo fare un filtraggio della stringa 
+	/**
+	 * Search for videos in a given pathname, then print duration and framerate.
+	 * @param path: pathname where the method will look in.
+	 * @return: flag that indicates the state of the search:
+	 * 			0: path was empty.
+	 * 			1: at least one video found.
+	 * 			2: path was not a directory.
+	 * 			3: path was an empty directory.
+	 * 			4: some exception was thrown.
+	 * 			5: no video found.
+	 */
+	public static int loadVideos(String path) {
 		
+		int state = 0;
 		videos = new HashMap<String,Video>();
-		boolean b = false;
-			//dir rappresenta la cartella corrente
-		File dir = new File(s);
-			//check if the number of files that are contain in the directory is not zero or if the path is equal the empty string
-		if(dir.listFiles().length==0 || s.equals("")){
-			return false;
-		}
-		//creato un array di file contenuti nella cartella
-		File files[]=dir.listFiles();	
-			//per ogni file viene effettuato il controllo sul formato
-		try {
-			for( File f : files ){		
-				if (extensionControl(f)) {   
-					MetaDataExtractor.extract_metada(f);
-					//codice per inserire file nella cartella
-					Video vid = new Video(f.getPath(),MetaDataExtractor.duration_video,MetaDataExtractor.fps_video);
-					videos.put(f.getPath(), vid);
-					vid.printData();;
+
+		if (!path.isEmpty()){
+			File dir = new File(path);
+			if(dir.isDirectory()){
+				File files[] = dir.listFiles();
+				if(files.length > 0){
+					try {
+						int i = 0;
+						for(File f : files){		
+							if (extensionControl(f)) { 
+								i++;
+								MetaDataExtractor.extract_metada(f);
+								//codice per inserire file nella cartella
+								Video vid = new Video(f.getPath(), MetaDataExtractor.duration_video, MetaDataExtractor.fps_video);
+								videos.put(f.getPath(), vid);
+								vid.printData();
+							}
+						}
+						if (i > 0)
+							// some video was found
+							state = 1;
+						else
+							state = 5;
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						// exception
+						state = 4;
+					}
 				}
+				else
+					// no files in dir
+					state = 3;
 			}
-			b=true;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			b=false;
+			else
+				// dir non è una directory
+				state = 2;
 		}
-		return b;
+		return state;
 	}
+	
 		//controlla se file sia video (considerando solamente formati che terminano con avi o mp4)
 	private static boolean extensionControl(File f) {
 		boolean b = false;
@@ -53,22 +75,24 @@ public class Directory {
 			//può venir fuori il problema della sua presenza
 			//vengono analizzati solo i file nella cartella che non sono directory
 		if (!f.isDirectory()) {
-			String s = f.getAbsolutePath();
 			Path path;
 			
 			try {
 	             path = Paths.get(f.getAbsolutePath()); 
 	             tipo = Files.probeContentType(path);
-	             //System.out.println("tipo: " + tipo.substring(0,tipo.indexOf("/")));
 	             
-	          } catch (Exception x) {
-	          }
+	        } catch (Exception x) {
+	        	  x.printStackTrace();
+	        }
 				//vengono selezionati solo i caratteri a partire dall'ultimo punto (l'estensione del file)
-			
+
 			try {
-				String format = tipo.substring(0,tipo.indexOf("/"));
-				if(format.equals("video")) {
-					b = true;
+				String format = "";
+				if(tipo != null){
+					format = tipo.substring(0, tipo.indexOf("/"));
+					if(!format.isEmpty() && format.equals("video")) {
+						b = true;
+					}
 				}
 			}
 			catch (Exception exc) {
