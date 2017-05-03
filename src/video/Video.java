@@ -57,8 +57,8 @@ public class Video {
 	}
 	
 	public void printData() {
-		FaceDetection.getTextArea().append("file: " + path + '\n' + '\t' +
-										   "duration: " + duration + "s framerate: " + framerate + " fps" + '\n');
+		FaceDetection.print("file: " + path + '\n' + '\t' +
+							"duration: " + duration + "s framerate: " + framerate + " fps" + '\n');
 	}
 	/**
 	 * Add a face that has founded by the algorithm 

@@ -1,6 +1,7 @@
 package detection;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,17 +11,18 @@ public class FaceDetection{
 	
 	private static final String TITLE = "Face Detection and Tracking";
 	private static final String LABEL_TEXT = "Search path";
-	private static final String CBOX_TEXT = "Include subdirectories";
+	private static final String CBOX_TEXT = "Include subdirectories (not yet)";
 	private static final String BTTN_TEXT1 = "Search";
 	private static final String BTTN_TEXT2 = "Clear";
 	
 	private static final int TEXTBOX_COLUMNS = 50;
 	private static final int TEXTAREA_ROWS = 28;
 	private static final int TEXTAREA_COLUMNS = 100;
+	private static final Font ELEMS_FONT = new Font("Arial", Font.PLAIN, 12);
 	private static final Font TEXTAREA_FONT = new Font("Consolas", Font.PLAIN, 12);
 	
 	private static JFrame frame;
-	private static JPanel panel, panel_one, panel_two, panel_three, panel_container;
+	private static JPanel panel, panel_one, panel_two, panel_three, panel_supercontainer, panel_container;
 	private static JLabel label;
 	private static JTextField textField;
 	private static JCheckBox checkBox;
@@ -53,8 +55,11 @@ public class FaceDetection{
 		panel_one = new JPanel();
 		panel_two = new JPanel();
 		panel_three = new JPanel();
+		panel_supercontainer = new JPanel();
 		panel_container = new JPanel();
 		panel_container.setLayout(new BoxLayout(panel_container, BoxLayout.PAGE_AXIS));
+		panel_supercontainer.setLayout(new BoxLayout(panel_supercontainer, BoxLayout.PAGE_AXIS));
+		panel_supercontainer.setBorder(new TitledBorder("Search for videos in a directory"));
 		
 		label = new JLabel(LABEL_TEXT);
 		textField = new JTextField();
@@ -64,6 +69,8 @@ public class FaceDetection{
 		button = new JButton(BTTN_TEXT1);
 		submitBttn = new JButton(BTTN_TEXT2);
 		
+		label.setFont(ELEMS_FONT);
+		checkBox.setFont(ELEMS_FONT);
 		textArea.setEditable(false);
 		textField.setColumns(TEXTBOX_COLUMNS);
 		textArea.setFont(TEXTAREA_FONT);
@@ -84,11 +91,12 @@ public class FaceDetection{
 			}
 		});
 		
-		frame.getContentPane().add(panel_container);
+		frame.getContentPane().add(panel_supercontainer);
+		panel_supercontainer.add(panel_container);
 		panel_container.add(panel);
 		panel_container.add(panel_one);
-		frame.getContentPane().add(panel_two);
-		frame.getContentPane().add(panel_three);
+		panel_supercontainer.add(panel_two);
+		panel_supercontainer.add(panel_three);
 		panel.add(label);
 		panel.add(textField);
 		panel_one.add(checkBox);
@@ -100,4 +108,7 @@ public class FaceDetection{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	public static void print(String s){
+		textArea.append(s);
+	}
 }

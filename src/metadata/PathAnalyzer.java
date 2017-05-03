@@ -29,6 +29,6 @@ public class PathAnalyzer {
 	}
 	
 	private void print(String str){
-		FaceDetection.getTextArea().append(str);
+		FaceDetection.print(str);
 	}
 }
